@@ -2,14 +2,15 @@ package com.impinj.octanesdk.samples;
 
 import java.util.ArrayList;
 
+// test for git
 public class start {
 	// test for GIT
-	static int sleepTime = 3000; // »¬¶¯´°¿ÚµÄ´óĞ¡£¬msÎªµ¥Î»
-	static int varThreshold = 100; // ·½²îãĞÖµ
+	static int sleepTime = 3000; // æ»‘åŠ¨çª—å£çš„å¤§å°ï¼Œmsä¸ºå•ä½
+	static int varThreshold = 100; // æ–¹å·®é˜ˆå€¼
 
 	static int slideNumforPosition = 4;
-	final static double thrLeave = -30.0; // Àë¿ªµÄãĞÖµ
-	final static double thrCome = -60.0; // ½øÈëµÄãĞÖµ
+	final static double thrLeave = -30.0; // ç¦»å¼€çš„é˜ˆå€¼
+	final static double thrCome = -60.0; // è¿›å…¥çš„é˜ˆå€¼
 	final static String[] bedName = { "1", "2" };
 
 	static int numContainerList = 0;
@@ -17,18 +18,18 @@ public class start {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		// »æÖÆ³õÊ¼»¯½çÃæ
+		// ç»˜åˆ¶åˆå§‹åŒ–ç•Œé¢
 		UItest ui = new UItest();
 		ui.init();
 
-		// ³õÊ¼»¯ÔÄ¶ÁÆ÷
+		// åˆå§‹åŒ–é˜…è¯»å™¨
 		rd.readerInit();
 
 		int count = 0;
-		// ²»¶ÏµØ¶¯Ì¬É¨Ãè£¬¸Ä±ä×´Ì¬
+		// ä¸æ–­åœ°åŠ¨æ€æ‰«æï¼Œæ”¹å˜çŠ¶æ€
 		while (true) {
-			System.out.println("¡ª¡ª¡ª¡ª¡ª¡ª");
-			// ¶ÁÈ¡µÄÊ±ÑÓ£º3Ãë
+			System.out.println("â€”â€”â€”â€”â€”â€”");
+			// è¯»å–çš„æ—¶å»¶ï¼š3ç§’
 			if (rd.isReaderOpen()) {
 				count++;
 				ui.detectingSign(count % 4);
@@ -84,7 +85,7 @@ public class start {
 					// rssiMax = -53;
 					// }
 
-					// ÅĞ¶ÏÊÇ·ñÔÚ³¡ && Àë¿ª
+					// åˆ¤æ–­æ˜¯å¦åœ¨åœº && ç¦»å¼€
 					if (cont.getState().isEmpty() && !cont.isPresent()) {
 						// System.out.println(rssiMeans);
 						if (rssiMax > thrCome) {
@@ -98,36 +99,36 @@ public class start {
 						continue;
 					}
 
-					// »ñÈ¡ÏàÎ»ĞÅºÅÊ±¼äĞòÁĞ,´Ó¶øÅĞ¶ÏµÎËÙ
+					// è·å–ç›¸ä½ä¿¡å·æ—¶é—´åºåˆ—,ä»è€Œåˆ¤æ–­æ»´é€Ÿ
 					ArrayList<Double> phaseListTmp = rd.getTagArray().get(beginTmp + lengthTmp);
 					// System.out.println(Reader.getTimestamp().size()+"~~~~~~~~~~");
 					ArrayList<Long> timestamp = Reader.getTimestamp().get(beginTmp / 5);
 					FlowrateCal.addPhase(phaseListTmp, timestamp);
 					
 					int flowrate = (int) (FlowrateCal.getFrequency()); 
-					// Õâ¸öFrequancy
-																		// Ó³Éäµ½1·ÖÖÓ£¬µÎ¶àÉÙÏÂ¡£
+					// è¿™ä¸ªFrequancy
+																		// æ˜ å°„åˆ°1åˆ†é’Ÿï¼Œæ»´å¤šå°‘ä¸‹ã€‚
 
-					System.out.print("µõÆ¿ºÅ£º " + beginTmp + "£¬  ¾ùÖµ£º" + rssiMean[0] + ", " + rssiMean[1] + ", "
-							+ rssiMean[2] + ", " + rssiMean[3] + "\n×î´óÖµ£º " + rssiMax + "£¬  ×´Ì¬£º " + cont.isPresent()
-							+ "£¬  ·½²î£º" + rssiVarSum);
+					System.out.print("åŠç“¶å·ï¼š " + beginTmp + "ï¼Œ  å‡å€¼ï¼š" + rssiMean[0] + ", " + rssiMean[1] + ", "
+							+ rssiMean[2] + ", " + rssiMean[3] + "\næœ€å¤§å€¼ï¼š " + rssiMax + "ï¼Œ  çŠ¶æ€ï¼š " + cont.isPresent()
+							+ "ï¼Œ  æ–¹å·®ï¼š" + rssiVarSum);
 
 					if (rssiVarSum < 200) {
-						System.out.println("   Á÷ËÙÁ÷ËÙÁ÷ËÙ£º " + flowrate);
+						System.out.println("   æµé€Ÿæµé€Ÿæµé€Ÿï¼š " + flowrate);
 						double empty = DataProcess.getEmptyRssi(rssiMean);
 						int waterLevel = (new WaterLevelCalculate()).Cal(rssiMean, empty);
-						// System.out.println("£¬ Ë®Î»£º "+ waterLevel);
+						// System.out.println("ï¼Œ æ°´ä½ï¼š "+ waterLevel);
 						cont.setWaterLevel(waterLevel);
 						if (rssiMax > thrLeave) {
 							cont.getState().add(-2);
-							System.out.println(", base:" + empty + "£¬  Ë®Î»£º -2" + " (" + cont.getState().size() + ")");
+							System.out.println(", base:" + empty + "ï¼Œ  æ°´ä½ï¼š -2" + " (" + cont.getState().size() + ")");
 						} else {
 							cont.getState().add(waterLevel);
 							System.out.println(
-									", base:" + empty + "£¬  Ë®Î»£º" + waterLevel + " (" + cont.getState().size() + ")");
+									", base:" + empty + "ï¼Œ  æ°´ä½ï¼š" + waterLevel + " (" + cont.getState().size() + ")");
 						}
 						cont.getTimestamp().add((int) (System.currentTimeMillis() % 100000000));
-						// Ë¢ĞÂÏàÓ¦µÄUI×´Ì¬
+						// åˆ·æ–°ç›¸åº”çš„UIçŠ¶æ€
 						ui.changeState(cont);
 						if (!cont.isHasWarn()) {
 							ui.addWarn(cont);
@@ -139,10 +140,10 @@ public class start {
 						cont.getTimestamp().add((int) (System.currentTimeMillis() % 100000000));
 						if (rssiMax > thrLeave) {
 							cont.getState().add(-2);
-							System.out.println(", base:    " + "£¬  Ë®Î»£º -2" + " (" + cont.getState().size() + ")");
+							System.out.println(", base:    " + "ï¼Œ  æ°´ä½ï¼š -2" + " (" + cont.getState().size() + ")");
 						} else {
 							cont.getState().add(-1);
-							System.out.println(", base:    " + "£¬  Ë®Î»£º -1" + " (" + cont.getState().size() + ")");
+							System.out.println(", base:    " + "ï¼Œ  æ°´ä½ï¼š -1" + " (" + cont.getState().size() + ")");
 						}
 					}
 
@@ -163,12 +164,12 @@ public class start {
 							for (int g = 0; g < Reader.getRefNumTag(); g++) {
 								varS[g] = DataProcess.getVarForRef(cont.bedArrayList, g);
 							}
-							System.out.print("***¶¨Î»·½²î±È½Ï£º  Ò»¡¢" + varS[0] + "  ¶ş¡¢" + varS[1]);
+							System.out.print("***å®šä½æ–¹å·®æ¯”è¾ƒï¼š  ä¸€ã€" + varS[0] + "  äºŒã€" + varS[1]);
 							if (varS[0] > varS[1]) {
-								System.out.println("    ---> 1ºÅ´²");
+								System.out.println("    ---> 1å·åºŠ");
 								ui.setBedNumAuto(cont, bedName[0]);
 							} else {
-								System.out.println("    ---> 2ºÅ´²");
+								System.out.println("    ---> 2å·åºŠ");
 								ui.setBedNumAuto(cont, bedName[1]);
 							}
 						}
