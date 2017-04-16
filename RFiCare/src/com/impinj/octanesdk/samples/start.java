@@ -3,7 +3,7 @@ package com.impinj.octanesdk.samples;
 import java.util.ArrayList;
 
 public class start {
-
+	// test for GIT
 	static int sleepTime = 3000; // 滑动窗口的大小，ms为单位
 	static int varThreshold = 100; // 方差阈值
 
