@@ -172,11 +172,11 @@ public class start {
 					
 					stmt.executeUpdate(sql.toString());
 
-//					ResultSet ret = stmt.executeQuery("select * from waterlevel");
-//					while (ret.next()) {
-//						System.out.print(ret.getString("name") + " ");
-//						System.out.println(ret.getString("info"));
-//					}
+					ResultSet ret = stmt.executeQuery("select * from waterlevel");
+					while (ret.next()) {
+						System.out.print(ret.getString("name") + " ");
+						System.out.println(ret.getString("info"));
+					}
 					
 //					String filename = "RFiCare";
 //					String fileFolderName = "E:\\ReallyMySQL";
