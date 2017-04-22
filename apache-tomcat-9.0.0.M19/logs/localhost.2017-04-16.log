@@ -1,0 +1,114 @@
+16-Apr-2017 20:08:27.084 信息 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+16-Apr-2017 20:08:27.085 信息 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+16-Apr-2017 20:09:45.118 信息 [Thread-5] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+16-Apr-2017 20:09:45.118 信息 [Thread-5] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+16-Apr-2017 20:10:04.617 信息 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+16-Apr-2017 20:10:04.618 信息 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+16-Apr-2017 20:23:07.537 信息 [Thread-5] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+16-Apr-2017 20:23:07.537 信息 [Thread-5] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+16-Apr-2017 20:29:55.695 信息 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+16-Apr-2017 20:29:55.696 信息 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+16-Apr-2017 20:35:06.567 信息 [Thread-6] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+16-Apr-2017 20:35:06.567 信息 [Thread-6] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+16-Apr-2017 20:35:36.463 信息 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+16-Apr-2017 20:35:36.463 信息 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+16-Apr-2017 20:37:39.797 信息 [Thread-6] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+16-Apr-2017 20:37:39.798 信息 [Thread-6] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+16-Apr-2017 20:38:36.014 信息 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+16-Apr-2017 20:38:36.015 信息 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+16-Apr-2017 20:39:03.475 信息 [Thread-6] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+16-Apr-2017 20:39:03.477 信息 [Thread-6] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+16-Apr-2017 20:40:08.393 信息 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+16-Apr-2017 20:40:08.393 信息 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+16-Apr-2017 20:40:14.362 严重 [http-nio-8088-exec-4] org.apache.catalina.core.StandardWrapperValve.invoke Servlet.service() for servlet [jsp] in context with path [/RF-iCare] threw exception [An exception occurred processing JSP page /index.jsp at line 53
+
+50: 	int step = 1;
+51: 	File fileFind = new File(fileFolderName);
+52: 	File[] fileArray = fileFind.listFiles();
+53: 	for (int i = 0; i < fileArray.length; i++) {
+54: 		if (fileArray[i].isFile() && fileArray[i].getName().startsWith(filename + "_")) {
+55: 			fileCount += step;
+56: 		}
+
+
+Stacktrace:] with root cause
+ java.lang.NullPointerException
+	at org.apache.jsp.index_jsp._jspService(index_jsp.java:162)
+	at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:70)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
+	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:443)
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:385)
+	at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:329)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:230)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:199)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:475)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:624)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:498)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:796)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1368)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745)
+
+16-Apr-2017 20:40:31.119 严重 [http-nio-8088-exec-7] org.apache.catalina.core.StandardWrapperValve.invoke Servlet.service() for servlet [jsp] in context with path [/RF-iCare] threw exception [An exception occurred processing JSP page /index.jsp at line 53
+
+50: 	int step = 1;
+51: 	File fileFind = new File(fileFolderName);
+52: 	File[] fileArray = fileFind.listFiles();
+53: 	for (int i = 0; i < fileArray.length; i++) {
+54: 		if (fileArray[i].isFile() && fileArray[i].getName().startsWith(filename + "_")) {
+55: 			fileCount += step;
+56: 		}
+
+
+Stacktrace:] with root cause
+ java.lang.NullPointerException
+	at org.apache.jsp.index_jsp._jspService(index_jsp.java:162)
+	at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:70)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
+	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:443)
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:385)
+	at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:329)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:742)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:230)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:192)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:165)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:199)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:475)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:80)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:624)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:498)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:796)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1368)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745)
+
+16-Apr-2017 20:53:17.370 信息 [Thread-6] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+16-Apr-2017 20:53:17.371 信息 [Thread-6] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
+16-Apr-2017 20:53:26.934 信息 [main] org.apache.catalina.core.ApplicationContext.log ContextListener: contextInitialized()
+16-Apr-2017 20:53:26.934 信息 [main] org.apache.catalina.core.ApplicationContext.log SessionListener: contextInitialized()
+16-Apr-2017 21:09:27.690 信息 [Thread-6] org.apache.catalina.core.ApplicationContext.log SessionListener: contextDestroyed()
+16-Apr-2017 21:09:27.690 信息 [Thread-6] org.apache.catalina.core.ApplicationContext.log ContextListener: contextDestroyed()
