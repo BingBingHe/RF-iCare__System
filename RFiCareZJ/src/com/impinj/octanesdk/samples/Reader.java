@@ -18,24 +18,48 @@ import com.impinj.octanesdk.TagReportListener;
 public class Reader {
 	public static HashMap<String, Integer> label = new HashMap<String, Integer>();
 	public static ArrayList<ArrayList<Double>> tagArray = new ArrayList<ArrayList<Double>>();
+	public static HashMap<String, Short> labelAntenna = new HashMap<String, Short>();
+
+	private static int numTag;
 
 	public static HashMap<String, Integer> refLabel = new HashMap<String, Integer>();
 	public static ArrayList<ArrayList<Double>> refTagArray = new ArrayList<ArrayList<Double>>();
 	private static int refNumTag;
 
 	private boolean ReaderOpen = false;
-	private static int numTag;
+
 	private static ImpinjReader impinjReader = new ImpinjReader();
 	private String hostname = "192.168.1.100";
 	public static int curTagNum = 0;
-	
 
 	static ArrayList<Container> containerList = new ArrayList<Container>();
 
 	public void tagInit() {
 		// 初始化label
-		refLabel.put("E280 1160 6000 0204 A12B F0FA", 1); // English
-		refLabel.put("E280 1160 6000 0204 A12C 6229", 2);  // Chinese
+		refLabel.put("E280 1160 6000 0204 A12B 1", 101); // English
+		refLabel.put("E280 1160 6000 0204 A12C 2", 102); // Chinese
+		refLabel.put("E280 1160 6000 0204 A12B 3", 103); // English
+		refLabel.put("E280 1160 6000 0204 A12C 4", 104); // Chinese
+		refLabel.put("E280 1160 6000 0204 A12B 5", 105); // English
+		refLabel.put("E280 1160 6000 0204 A12C 6", 106); // Chinese
+		refLabel.put("E280 1160 6000 0204 A12B 7", 107); // English
+		refLabel.put("E280 1160 6000 0204 A12C 8", 108); // Chinese
+		refLabel.put("E280 1160 6000 0204 A12B 9", 201); // English
+		refLabel.put("E280 1160 6000 0204 A12C 10", 202); // Chinese
+		refLabel.put("E280 1160 6000 0204 A12B 11", 203); // English
+		refLabel.put("E280 1160 6000 0204 A12C 12", 204); // Chinese
+		refLabel.put("E280 1160 6000 0204 A12B 13", 205); // English
+		refLabel.put("E280 1160 6000 0204 A12C 14", 206); // Chinese
+		refLabel.put("E280 1160 6000 0204 A12B 15", 207); // English
+		refLabel.put("E280 1160 6000 0204 A12C 16", 208); // Chinese
+		refLabel.put("E280 1160 6000 0204 A12B 17", 301); // English
+		refLabel.put("E280 1160 6000 0204 A12C 18", 302); // Chinese
+		refLabel.put("E280 1160 6000 0204 A12B 19", 303); // English
+		refLabel.put("E280 1160 6000 0204 A12C 20", 304); // Chinese
+		refLabel.put("E280 1160 6000 0204 A12C 21", 305);
+		refLabel.put("E280 1160 6000 0204 A12C 22", 306);
+		refLabel.put("E280 1160 6000 0204 A12C 23", 307);
+		refLabel.put("E280 1160 6000 0204 A12C 24", 308);
 
 		refNumTag = refLabel.size();
 		for (int i = 0; i < refNumTag; i++) {
@@ -46,8 +70,8 @@ public class Reader {
 		// label.put("1B1B 1B1B 0000 0000 0000 0002", 2);
 		// label.put("3008 33B2 DDD9 0140 0000 0000", 3);
 		// label.put("3008 33B2 DDD9 0140 0000 0001", 4);
-
 		// numTag = label.size();
+
 		numTag = 100;
 
 		for (int i = 0; i < numTag; i++) {
@@ -70,17 +94,17 @@ public class Reader {
 				List<Tag> tags = report0.getTags();
 				for (Tag t : tags) {
 					if (refLabel.containsKey(t.getEpc().toString())) {
-//						System.out.println(t.getEpc().toString());
-						refTagArray.get(refLabel.get(t.getEpc().toString())-1).add(t.getPeakRssiInDbm());
+						refTagArray.get(refLabel.get(t.getEpc().toString()) - 1).add(t.getPeakRssiInDbm());
 					} else {
-						if (label.containsKey(t.getEpc().toString())) {
+						if (label.containsKey(t.getEpc().toString())
+								&& labelAntenna.get(t.getEpc().toString()) == t.getAntennaPortNumber()) {
 							if (t.isPeakRssiInDbmPresent()) {
-
 								tagArray.get(label.get(t.getEpc().toString())).add(t.getPeakRssiInDbm());
 							}
 						} else {
 							if (t.getPeakRssiInDbm() > start.thrCome) {
 								label.put(t.getEpc().toString(), curTagNum++);
+								labelAntenna.put(t.getEpc().toString(), t.getAntennaPortNumber());
 								System.out.println("******    " + t.getEpc().toString() + " 进入，目前标签个数为：" + curTagNum);
 							}
 						}
@@ -120,13 +144,27 @@ public class Reader {
 //
 //				settings.setReaderMode(ReaderMode.AutoSetDenseReader);
 //
+//				double txPowerinDbm = 32.0;
+//				int rxSensitivityinDbm = -80;
 //				AntennaConfigGroup antennas = settings.getAntennas();
 //				antennas.disableAll();
 //				antennas.enableById(new short[] { 1 });
 //				antennas.getAntenna((short) 1).setIsMaxRxSensitivity(false);
 //				antennas.getAntenna((short) 1).setIsMaxTxPower(false);
-//				antennas.getAntenna((short) 1).setTxPowerinDbm(32.0);
-//				antennas.getAntenna((short) 1).setRxSensitivityinDbm(-80);
+//				antennas.getAntenna((short) 1).setTxPowerinDbm(txPowerinDbm);
+//				antennas.getAntenna((short) 1).setRxSensitivityinDbm(rxSensitivityinDbm);
+//
+//				antennas.enableById(new short[] { 2 });
+//				antennas.getAntenna((short) 2).setIsMaxRxSensitivity(false);
+//				antennas.getAntenna((short) 2).setIsMaxTxPower(false);
+//				antennas.getAntenna((short) 2).setTxPowerinDbm(txPowerinDbm);
+//				antennas.getAntenna((short) 2).setRxSensitivityinDbm(rxSensitivityinDbm);
+//
+//				antennas.enableById(new short[] { 3 });
+//				antennas.getAntenna((short) 3).setIsMaxRxSensitivity(false);
+//				antennas.getAntenna((short) 3).setIsMaxTxPower(false);
+//				antennas.getAntenna((short) 3).setTxPowerinDbm(txPowerinDbm);
+//				antennas.getAntenna((short) 3).setRxSensitivityinDbm(rxSensitivityinDbm);
 //
 //				impinjReader.applySettings(settings);
 //				impinjReader.start();
@@ -137,10 +175,10 @@ public class Reader {
 //			e1.printStackTrace();
 //		}
 //		return ReaderOpen;
-		curTagNum++;
-		ReaderOpen = true;
-		 return true;
 
+		 curTagNum++;
+		 ReaderOpen = true;
+		 return true;
 	}
 
 	public boolean close() {
@@ -167,7 +205,6 @@ public class Reader {
 		return tagArray;
 	}
 
-	
 	public static HashMap<String, Integer> getRefLabel() {
 		return refLabel;
 	}
@@ -197,8 +234,8 @@ public class Reader {
 			tagArray.get(i).clear();
 		}
 	}
-	
-	public void clearRefCache(){
+
+	public void clearRefCache() {
 		for (int i = 0; i < refNumTag; i++) {
 			refTagArray.get(i).clear();
 		}

@@ -11,26 +11,25 @@ public class start {
 
 	static int sleepTime = 3000; // 滑动窗口的大小，ms为单位
 	static int varThreshold = 100; // 方差阈值
-	
-	
+
 	static int slideNumforPosition = 6;
 	final static double thrLeave = -33.0; // 离开的阈值
 	final static double thrCome = -55.0; // 进入的阈值
-	final static String[] bedName = {"321","323"};
-	
-	
- 	static int numContainerList = 0;
+	final static String[] bedName = { "321", "323" };
+
+	static int numContainerList = 0;
 	static Reader rd = new Reader();
 
 	public static void main(String[] args) throws InterruptedException, ClassNotFoundException, SQLException {
 
 		Class.forName("com.mysql.jdbc.Driver");
-		String url = "114.212.84.243";
+		// String url = "114.212.84.243";
+		String url = "120.24.42.68";
 		String user = "javatest";
 		String password = "1234";
-		Connection conn = DriverManager.getConnection("jdbc:mysql://"+ url +"/hebb", user, password);
+		Connection conn = DriverManager.getConnection("jdbc:mysql://" + url + "/hebb", user, password);
 		Statement stmt = conn.createStatement();
-		
+
 		// 绘制初始化界面
 		UItest ui = new UItest();
 		ui.init();
@@ -57,14 +56,13 @@ public class start {
 					double rssiMax = rssiMeansTmp[1];
 					double rssiVarSum = DataProcess.getVar(rd.getTagArray(), beginTmp, 1);
 
-					
 					// 判断是否在场 && 离开
-					if(h == 0 && count >1 ){
+					if (h == 0 && count > 1) {
 						rssiMean = -60;
 						rssiMax = -60;
 					}
-					
-					if(h == 0 && count >3 ){
+
+					if (h == 0 && count > 3) {
 						rssiMean = -50;
 						rssiMax = -53;
 					}
@@ -89,23 +87,23 @@ public class start {
 					int iTmp = cont.getState().size();
 					if (iTmp > 0 && iTmp < slideNumforPosition + 1) {
 						for (int g = 0; g < Reader.getRefNumTag(); g++) {
-							cont.bedArrayList.get(g).addAll(rd.getRefTagArray().get(g));							
+							cont.bedArrayList.get(g).addAll(rd.getRefTagArray().get(g));
 						}
 						if (iTmp == slideNumforPosition) {
 							double[] varS = new double[Reader.getRefNumTag()];
 							for (int g = 0; g < Reader.getRefNumTag(); g++) {
 								varS[g] = DataProcess.getVarForRef(cont.bedArrayList, g);
 							}
-							System.out.println("    " +   varS[0] + "  " + varS[1]);
-//							if (varS[0] > varS[1]) {
-//								System.out.println("---> 1");
-//								ui.setBedNumAuto(cont, bedName[0]);
-//							} else {
-//								System.out.println("---> 2");
-//								ui.setBedNumAuto(cont, bedName[1]);
-//							}
+							System.out.println("    " + varS[0] + "  " + varS[1]);
+							// if (varS[0] > varS[1]) {
+							// System.out.println("---> 1");
+							// ui.setBedNumAuto(cont, bedName[0]);
+							// } else {
+							// System.out.println("---> 2");
+							// ui.setBedNumAuto(cont, bedName[1]);
+							// }
 						}
-					} 
+					}
 
 					if (rssiVarSum < 200) {
 						int waterLevel = (new WaterLevelCalculate()).CalSingle(rssiMean);
@@ -144,20 +142,20 @@ public class start {
 						ui.removeWarn(cont);
 						ui.removeState(cont);
 					}
-					
-					
+
 					StringBuilder sql = new StringBuilder();
 					sql.append("insert into waterlevel values (");
 					sql.append("'jack'");
 					sql.append(",");
-					sql.append("'"+cont.getBedNum()+"'");
+					// sql.append("'"+cont.getBedNum()+"'");
+					sql.append("'" + 301 + "'");
 					sql.append(",");
-					sql.append("" + cont.getWaterLevel() * 12.5 );
+					sql.append("" + cont.getWaterLevel() * 12.5);
 					sql.append(",");
-					if(cont.isHasWarn()){
+					if (cont.isHasWarn()) {
 						sql.append("1");
-					}else{
-						sql.append("0");						
+					} else {
+						sql.append("0");
 					}
 					sql.append(",");
 					sql.append("40");
@@ -168,8 +166,7 @@ public class start {
 					sql.append(",");
 					sql.append("04192008");
 					sql.append(");");
-					
-					
+
 					stmt.executeUpdate(sql.toString());
 
 					ResultSet ret = stmt.executeQuery("select * from waterlevel");
@@ -177,55 +174,6 @@ public class start {
 						System.out.print(ret.getString("name") + " ");
 						System.out.println(ret.getString("info"));
 					}
-					
-//					String filename = "RFiCare";
-//					String fileFolderName = "E:\\ReallyMySQL";
-//					int fileCount = 1;
-//					int step = 1;
-//					File fileFind = new File(fileFolderName);
-//					File[] fileArray = fileFind.listFiles();
-//					for (int i = 0; i < fileArray.length; i++) {
-//						if (fileArray[i].isFile() && fileArray[i].getName().startsWith(filename + "_")) {
-//							fileCount += step;
-//						}
-//					}
-//
-//					
-//					File file = new File(fileFolderName + "\\" + filename + "_" + fileCount + ".csv");
-//					
-//					
-//					StringBuilder outPut = new StringBuilder();
-//					outPut.append(""+cont.bedNum);
-//					outPut.append(",");
-//					outPut.append(""+cont.getWaterLevel() * 12.5);
-//					outPut.append(",");
-//					if(cont.isHasWarn()){
-//						outPut.append("yes");
-//					}else{
-//						outPut.append("no");						
-//					}
-//					outPut.append(",");
-//					outPut.append("40");
-//					outPut.append(",");
-//					outPut.append("120");
-//					outPut.append(",");
-//					outPut.append("NaCl");
-//					outPut.append(",");
-//					outPut.append("Jack");
-//					outPut.append(",");
-//					outPut.append("2017.04.08");
-//					
-//					BufferedWriter bw;
-//					try {
-//						bw = new BufferedWriter(new FileWriter(file));
-//						bw.write(outPut.toString());
-//						bw.flush();
-//						bw.close();
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-					
 				}
 				rd.clearCache();
 				rd.clearRefCache();
