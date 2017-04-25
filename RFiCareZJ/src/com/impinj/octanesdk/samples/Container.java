@@ -39,9 +39,6 @@ public class Container {
 	public Container(int begin) {
 		super();
 		this.begin = begin;
-		for(int i = 0; i < Reader.getRefNumTag() ; i++){
-			bedArrayList.add(new ArrayList<Double>());
-		}
 	}
 
 	

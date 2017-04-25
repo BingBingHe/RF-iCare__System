@@ -1,20 +1,17 @@
 package com.impinj.octanesdk.samples;
 
 import java.sql.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class start {
 
 	static int sleepTime = 3000; // 滑动窗口的大小，ms为单位
 	static int varThreshold = 100; // 方差阈值
 
-	static int slideNumforPosition = 6;
-	final static double thrLeave = -33.0; // 离开的阈值
-	final static double thrCome = -55.0; // 进入的阈值
+	final static double thrLeave = -35.0; // 离开的阈值
+	final static double thrCome = -50.0; // 进入的阈值
+	final static double thrComeforPatient = -40.0; // 病人进入的阈值
+
 	final static String[] bedName = { "321", "323" };
 
 	static int numContainerList = 0;
@@ -22,13 +19,7 @@ public class start {
 
 	public static void main(String[] args) throws InterruptedException, ClassNotFoundException, SQLException {
 
-		Class.forName("com.mysql.jdbc.Driver");
-		// String url = "114.212.84.243";
-		String url = "120.24.42.68";
-		String user = "javatest";
-		String password = "1234";
-		Connection conn = DriverManager.getConnection("jdbc:mysql://" + url + "/hebb", user, password);
-		Statement stmt = conn.createStatement();
+		sqlOperation.connection();
 
 		// 绘制初始化界面
 		UItest ui = new UItest();
@@ -39,14 +30,72 @@ public class start {
 
 		int count = 0;
 		// 不断地动态扫描，改变状态
-		while (true) {
+		while (count < 28800) {
 			System.out.println("    ——————");
-			// 读取的时延：3秒
 			if (rd.isReaderOpen()) {
 				count++;
-				ui.detectingSign(count % 4);
+				ui.detectingSign(count % 4); // 动态地改变状态显示标志
+
+				// 读取的时延：3秒
 				Thread.sleep(sleepTime);
-				// for (Container cont : Reader.containerList) {
+
+				String new_patient = "E280 1160 6000 0204 A12B 02";
+				// System.out.println(Reader.patient_curTagNum + "#####");
+				if (Reader.patient_curTagNum >= 2 && Reader.patient_curTagNum % 2 == 0) {
+					// 是否属于病人标签
+					HashMap<String, Integer> map = Reader.getPatient_label();
+					String last1 = "";
+					String last2 = "";
+
+					for (String getKey : map.keySet()) {
+						if (map.get(getKey) == (Reader.patient_curTagNum - 1)) {
+							last1 = getKey;
+
+						} else if (map.get(getKey) == (Reader.patient_curTagNum - 2)) {
+							last2 = getKey;
+						}
+					}
+
+					if (Reader.isBed(last1) && !Reader.isBed(last2)) {
+						if (!Reader.getLabel().containsKey(last2)) {
+							Reader.getLabel().put(last2, Reader.curTagNum++);
+							new_patient = last1;
+							map.clear();
+							Reader.patient_curTagNum = 0;
+						} else {
+							map.remove(last2);
+							Reader.patient_curTagNum--;
+						}
+
+					} else if (Reader.isBed(last2) && !Reader.isBed(last1)) {
+						if (!Reader.getLabel().containsKey(last1)) {
+							Reader.getLabel().put(last1, Reader.curTagNum++);
+							new_patient = last2;
+							map.clear();
+							Reader.patient_curTagNum = 0;
+						} else {
+							map.remove(last1);
+							Reader.patient_curTagNum--;
+						}
+					} else if (!Reader.isBed(last2) && !Reader.isBed(last1)) {
+						if (Reader.getLabel().containsKey(last1)) {
+							map.remove(last1);
+							Reader.patient_curTagNum--;
+						}
+						if (Reader.getLabel().containsKey(last2)) {
+							map.remove(last2);
+							Reader.patient_curTagNum--;
+						}
+						if (!Reader.getLabel().containsKey(last2) && !Reader.getLabel().containsKey(last1)) {
+							map.clear();
+							Reader.patient_curTagNum = 0;
+						}
+					} else {
+						map.clear();
+						Reader.patient_curTagNum = 0;
+					}
+				}
+
 				for (int h = 0; h < Reader.curTagNum; h++) {
 
 					Container cont = Reader.containerList.get(h);
@@ -69,11 +118,12 @@ public class start {
 
 					if (cont.getState().isEmpty() && !cont.isPresent()) {
 						// System.out.println(rssiMeans);
-						if (rssiMax > thrCome) {
-							cont.setPresent(true);
-							ui.addState(cont);
-							numContainerList++;
-						}
+						// if (rssiMax > thrCome) {
+						cont.setPresent(true);
+						ui.addState(cont);
+						ui.setBedNumAuto(cont, Reader.patient_bed.get(new_patient));
+						numContainerList++;
+						// }
 					}
 
 					System.out.print("吊瓶号： " + beginTmp + "，  均值：" + rssiMean + "，  最大值： " + rssiMax + "，  状态： "
@@ -82,27 +132,6 @@ public class start {
 					if (!cont.isPresent()) {
 						System.out.println();
 						continue;
-					}
-
-					int iTmp = cont.getState().size();
-					if (iTmp > 0 && iTmp < slideNumforPosition + 1) {
-						for (int g = 0; g < Reader.getRefNumTag(); g++) {
-							cont.bedArrayList.get(g).addAll(rd.getRefTagArray().get(g));
-						}
-						if (iTmp == slideNumforPosition) {
-							double[] varS = new double[Reader.getRefNumTag()];
-							for (int g = 0; g < Reader.getRefNumTag(); g++) {
-								varS[g] = DataProcess.getVarForRef(cont.bedArrayList, g);
-							}
-							System.out.println("    " + varS[0] + "  " + varS[1]);
-							// if (varS[0] > varS[1]) {
-							// System.out.println("---> 1");
-							// ui.setBedNumAuto(cont, bedName[0]);
-							// } else {
-							// System.out.println("---> 2");
-							// ui.setBedNumAuto(cont, bedName[1]);
-							// }
-						}
 					}
 
 					if (rssiVarSum < 200) {
@@ -166,21 +195,18 @@ public class start {
 					sql.append(",");
 					sql.append("04192008");
 					sql.append(");");
-
-					stmt.executeUpdate(sql.toString());
-
-					ResultSet ret = stmt.executeQuery("select * from waterlevel");
-					while (ret.next()) {
-						System.out.print(ret.getString("name") + " ");
-						System.out.println(ret.getString("info"));
-					}
+					
+					sqlOperation.add(sql.toString());
+					sqlOperation.select();
 				}
+				
 				rd.clearCache();
-				rd.clearRefCache();
+
 			} else {
 				ui.initSign();
 			}
 		}
+		sqlOperation.close();
 	}
 
 }
