@@ -1,6 +1,6 @@
 package com.impinj.octanesdk.samples;
 
-import java.util.*;
+//import java.util.*;
 
 public class WaterLevelCalculate {
 

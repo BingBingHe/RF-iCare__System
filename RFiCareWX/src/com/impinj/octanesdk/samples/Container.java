@@ -1,13 +1,9 @@
 package com.impinj.octanesdk.samples;
 
-import java.awt.Label;
 import java.util.ArrayList;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Container {
-
 
 	String bedNum = "未知";
 	int bedSign = 0;
@@ -16,7 +12,7 @@ public class Container {
 	JPanel displayUnit = new JPanel();
 	JPanel taskUnit = new JPanel();
 	boolean hasWarn = false;
-	
+
 	// 标签的头号索引和长度
 	int begin = -1;
 	int length = 1;
@@ -34,38 +30,26 @@ public class Container {
 	int timeRemainCur = 0;
 	private String name;
 
-	
-	
 	public Container(int begin) {
 		super();
 		this.begin = begin;
 	}
 
-	
-	
 	public boolean isHasWarn() {
 		return hasWarn;
 	}
-
-
 
 	public void setHasWarn(boolean hasWarn) {
 		this.hasWarn = hasWarn;
 	}
 
-
-
 	public JPanel getTaskUnit() {
 		return taskUnit;
 	}
 
-
-
 	public void setTaskUnit(JPanel taskUnit) {
 		this.taskUnit = taskUnit;
 	}
-
-
 
 	public JPanel getDisplayUnit() {
 		return displayUnit;
@@ -74,8 +58,6 @@ public class Container {
 	public void setDisplayUnit(JPanel displayUnit) {
 		this.displayUnit = displayUnit;
 	}
-
-
 
 	public int getTimeRemainCal() {
 		return timeRemainCal;
@@ -92,8 +74,6 @@ public class Container {
 	public void setTimeRemainCur(int timeRemainCur) {
 		this.timeRemainCur = timeRemainCur;
 	}
-
-
 
 	public int getBegin() {
 		return begin;
@@ -158,7 +138,5 @@ public class Container {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
 
 }

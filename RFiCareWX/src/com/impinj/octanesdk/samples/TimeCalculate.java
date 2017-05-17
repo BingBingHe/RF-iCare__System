@@ -1,6 +1,5 @@
 package com.impinj.octanesdk.samples;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.Arrays;
 
@@ -11,7 +10,7 @@ import java.util.Arrays;
 public class TimeCalculate {
 
 	private int stableNumber = 3;
-	private int stateNumber = 8;
+//	private int stateNumber = 8;
 
 	// judge if the bottle can leave the environment
 	public boolean canLeave(ArrayList<Integer> state, Container cont) {
@@ -52,7 +51,7 @@ public class TimeCalculate {
 		Map<Integer, Integer> map = new HashMap<>();
 
 		for (int i = 0; i < size - stableNumber + 1; i++) {
-			int temp = 0;
+//			int temp = 0;
 			boolean flag = true;
 			for (int j = i; j < i + stableNumber; j++) {
 				if (!state.get(i).equals(state.get(j)) || Integer.parseInt(state.get(i).toString()) == -1) {

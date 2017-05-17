@@ -4,61 +4,32 @@ import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.Button;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.Label;
-import java.awt.Panel;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.security.KeyStore.Entry;
 import java.text.SimpleDateFormat;
-import java.time.zone.ZoneOffsetTransitionRule.TimeDefinition;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
-
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.JList;
 
 public class UItest {
-	
+
 	final JFrame f = new JFrame("RF-ICare（尔福康）输液系统  V1.1");
 	final JPanel displayPanel = new JPanel();
 	final JScrollPane displayJSP = new JScrollPane();
@@ -301,7 +272,7 @@ public class UItest {
 
 				displayUnit.setBorder(tbtmp);
 
-				String info = "" + cont.getBedNum() + "号床开始输液。";
+				// String info = "" + cont.getBedNum() + "号床开始输液。";
 
 				// try {
 				// URL uri = this.getClass().getResource("transfusion/log.txt");
@@ -391,17 +362,17 @@ public class UItest {
 	}
 
 	public void removeState(Container cont) {
-		
+
 		displayPanel.remove(cont.getDisplayUnit());
 		displayPanel.validate();
 		displayPanel.updateUI();
 		displayUnits.remove(cont.getDisplayUnit());
-		
 
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");
-		Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
-		String time = "【时间：" + formatter.format(curDate) + "】";
-		String info = "" + cont.getBedNum() + "号床结束输液。";
+		// SimpleDateFormat formatter = new
+		// SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");
+		// Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
+		// String time = "【时间：" + formatter.format(curDate) + "】";
+		// String info = "" + cont.getBedNum() + "号床结束输液。";
 	}
 
 	public boolean isNeedWarn(Container cont) {
@@ -422,11 +393,11 @@ public class UItest {
 		boolean ct = isNeedWarn(cont);
 		if (ct && cont.getState().size() > 15) {
 
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");
-			Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
-			String time = "【时间：" + formatter.format(curDate) + "】";
+//			SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");
+//			Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
 
-			String info = "" + cont.getBedNum() + "号床即将输液完毕，已发送提醒。";
+			// String time = "【时间：" + formatter.format(curDate) + "】";
+			// String info = "" + cont.getBedNum() + "号床即将输液完毕，已发送提醒。";
 			// try {
 			// URL uri = this.getClass().getResource("transfusion/log.txt");
 			// File logFile = new File(uri.toURI().getPath());
@@ -621,7 +592,7 @@ public class UItest {
 	public void setBedNumAuto(Container cont, String bedNum) {
 		JPanel jpTmp = cont.getDisplayUnit();
 		TitledBorder tbtmp = null;
-		TitledBorder tb = (TitledBorder) jpTmp.getBorder();
+		// TitledBorder tb = (TitledBorder) jpTmp.getBorder();
 		// System.out.println(bedNum);
 
 		tbtmp = BorderFactory.createTitledBorder("" + bedNum + "号床");
