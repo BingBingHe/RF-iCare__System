@@ -130,6 +130,7 @@ public class Reader {
 				// TODO Auto-generated method stub
 				List<Tag> tags = report0.getTags();
 				for (Tag t : tags) {
+					System.out.println(t.getAntennaPortNumber() +"     "+t.getEpc().toString());
 					if (patient_bed.containsKey(t.getEpc().toString())) {
 						// 如果读到床号标签的话
 						if (patient_label.containsKey(t.getEpc().toString())) {
@@ -206,7 +207,7 @@ public class Reader {
 
 				settings.setReaderMode(ReaderMode.AutoSetDenseReader);
 
-				double txPowerinDbm = 32.0;
+				double txPowerinDbm = 12.0;
 				int rxSensitivityinDbm = -80;
 				AntennaConfigGroup antennas = settings.getAntennas();
 				antennas.disableAll();
