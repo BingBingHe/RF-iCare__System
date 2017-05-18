@@ -69,8 +69,6 @@ public class Reader {
 		patient_bed.put("E280 1160 6000 0204 A12C 24", "308");
 		patient_bed.put("Unknown", "Unknown");
 
-		
-
 		// label.put("1B1B 1B1B 0000 0000 0000 0001", 1);
 		// label.put("1B1B 1B1B 0000 0000 0000 0002", 2);
 		// label.put("3008 33B2 DDD9 0140 0000 0000", 3);
@@ -133,52 +131,67 @@ public class Reader {
 				// TODO Auto-generated method stub
 				List<Tag> tags = report0.getTags();
 				for (Tag t : tags) {
-//					System.out.println(t.getAntennaPortNumber() +"     "+t.getEpc().toString());
-					if (patient_bed.containsKey(t.getEpc().toString())) {
-						// 如果读到床号标签的话
-						if (patient_label.containsKey(t.getEpc().toString())) {
-							if (t.isPeakRssiInDbmPresent()) {
-								patient_tagArray.get(patient_label.get(t.getEpc().toString()))
-										.add(t.getPeakRssiInDbm());
-							}
-						} else {
-							if (t.getPeakRssiInDbm() > start.thrComeforPatient) {
-								if (!(patient_TimeStamp.containsKey(t.getEpc().toString()) && System.currentTimeMillis()
-										- patient_TimeStamp.get(t.getEpc().toString()) < 10000)) {
-									patient_TimeStamp.put(t.getEpc().toString(), System.currentTimeMillis());
-									patient_label.put(t.getEpc().toString(), patient_curTagNum++);
-									System.out.println("******    " + t.getEpc().toString() + " 进入，手持阅读器扫描到的标签为："
-											+ patient_curTagNum);
-								}
-							}
-						}
-					} else {
-						if (label.containsKey(t.getEpc().toString())) {
-							if (t.isPeakRssiInDbmPresent()
-									&& labelAntenna.get(t.getEpc().toString()) == t.getAntennaPortNumber()) {
-								tagArray.get(label.get(t.getEpc().toString())).add(t.getPeakRssiInDbm());
-							}
-						} else {
-							if (t.getPeakRssiInDbm() > start.thrCome) {
-								// label.put(t.getEpc().toString(),
-								// curTagNum++);
-
-								// System.out.println("****** " +
-								// t.getEpc().toString() + " 进入，目前标签个数为：" +
-								// curTagNum);
-
-								if (!(patient_TimeStamp.containsKey(t.getEpc().toString()) && System.currentTimeMillis()
-										- patient_TimeStamp.get(t.getEpc().toString()) < 10000)) {
-
-									labelAntenna.put(t.getEpc().toString(), t.getAntennaPortNumber());
-									patient_TimeStamp.put(t.getEpc().toString(), System.currentTimeMillis());
-									patient_label.put(t.getEpc().toString(), patient_curTagNum++);
-									System.out.println("******    " + t.getEpc().toString() + " 进入，手持阅读器扫描到的标签为："
-											+ patient_curTagNum);
-								}
-							}
+					// System.out.println(t.getAntennaPortNumber() +"
+					// "+t.getEpc().toString());
+					// if (patient_bed.containsKey(t.getEpc().toString())) {
+					// // 如果读到床号标签的话
+					// if (patient_label.containsKey(t.getEpc().toString())) {
+					// if (t.isPeakRssiInDbmPresent()) {
+					// patient_tagArray.get(patient_label.get(t.getEpc().toString()))
+					// .add(t.getPeakRssiInDbm());
+					// }
+					// } else {
+					// if (t.getPeakRssiInDbm() > start.thrComeforPatient) {
+					// if
+					// (!(patient_TimeStamp.containsKey(t.getEpc().toString())
+					// && System.currentTimeMillis()
+					// - patient_TimeStamp.get(t.getEpc().toString()) < 10000))
+					// {
+					// patient_TimeStamp.put(t.getEpc().toString(),
+					// System.currentTimeMillis());
+					// patient_label.put(t.getEpc().toString(),
+					// patient_curTagNum++);
+					// System.out.println("****** " + t.getEpc().toString() + "
+					// 进入，手持阅读器扫描到的标签为："
+					// + patient_curTagNum);
+					// }
+					// }
+					// }
+					// } else {
+					if (label.containsKey(t.getEpc().toString())) {
+						if (t.isPeakRssiInDbmPresent()
+								&& labelAntenna.get(t.getEpc().toString()) == t.getAntennaPortNumber()) {
+							tagArray.get(label.get(t.getEpc().toString())).add(t.getPeakRssiInDbm());
 						}
 					}
+					// else {
+					// if (t.getPeakRssiInDbm() > start.thrCome) {
+					// // label.put(t.getEpc().toString(),
+					// // curTagNum++);
+					//
+					// // System.out.println("****** " +
+					// // t.getEpc().toString() + " 进入，目前标签个数为：" +
+					// // curTagNum);
+					//
+					// if
+					// (!(patient_TimeStamp.containsKey(t.getEpc().toString())
+					// && System.currentTimeMillis()
+					// - patient_TimeStamp.get(t.getEpc().toString()) < 10000))
+					// {
+					//
+					// labelAntenna.put(t.getEpc().toString(),
+					// t.getAntennaPortNumber());
+					// patient_TimeStamp.put(t.getEpc().toString(),
+					// System.currentTimeMillis());
+					// patient_label.put(t.getEpc().toString(),
+					// patient_curTagNum++);
+					// System.out.println(
+					// "****** " + t.getEpc().toString() + "进入，手持阅读器扫描到的标签为：" +
+					// patient_curTagNum);
+					// }
+					// }
+					// }
+					// }
 				}
 			}
 		});
@@ -210,7 +223,7 @@ public class Reader {
 
 				settings.setReaderMode(ReaderMode.AutoSetDenseReader);
 
-				double txPowerinDbm = 10.0;
+				double txPowerinDbm = 32.0;
 				int rxSensitivityinDbm = -80;
 				AntennaConfigGroup antennas = settings.getAntennas();
 				antennas.disableAll();

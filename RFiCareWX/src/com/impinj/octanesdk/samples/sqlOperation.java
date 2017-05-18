@@ -32,10 +32,62 @@ public class sqlOperation {
 		}
 	}
 
-	public static void add(String tmp) {
+	public static void add(Container cont) {
+
+		StringBuilder sql = new StringBuilder();
+		int count = selectBednumber(cont);
+
+		if (count == 0) {
+			sql.append("insert into waterlevel values (");
+			sql.append("'jack'");
+			sql.append(",");
+			// sql.append("'"+cont.getBedNum()+"'");
+			sql.append("'" + 301 + "'");
+			sql.append(",");
+			sql.append("" + cont.getWaterLevel() * 12.5);
+			sql.append(",");
+			if (cont.isHasWarn()) {
+				sql.append("1");
+			} else {
+				sql.append("0");
+			}
+			sql.append(",");
+			sql.append("40");
+			sql.append(",");
+			sql.append("120");
+			sql.append(",");
+			sql.append("'NaCl'");
+			sql.append(",");
+			sql.append("04192008");
+			sql.append(");");
+
+		} else {
+			sql.append("insert into waterlevel values (");
+			sql.append("'jack'");
+			sql.append(",");
+			// sql.append("'"+cont.getBedNum()+"'");
+			sql.append("'" + 301 + "'");
+			sql.append(",");
+			sql.append("" + cont.getWaterLevel() * 12.5);
+			sql.append(",");
+			if (cont.isHasWarn()) {
+				sql.append("1");
+			} else {
+				sql.append("0");
+			}
+			sql.append(",");
+			sql.append("40");
+			sql.append(",");
+			sql.append("120");
+			sql.append(",");
+			sql.append("'NaCl'");
+			sql.append(",");
+			sql.append("04192008");
+			sql.append(");");
+		}
 
 		try {
-			stmt.executeUpdate(tmp);
+			stmt.executeUpdate(sql.toString());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,6 +108,23 @@ public class sqlOperation {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public static int selectBednumber(Container cont) {
+		ResultSet ret;
+		int count = 0;
+		try {
+			ret = stmt.executeQuery("select * from waterlevel where bednumber = '" + cont.bedNum + "'");
+
+			while (ret.next()) {
+				count++;
+			}
+			ret.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
 	}
 
 	public static void close() {

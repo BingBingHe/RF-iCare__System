@@ -107,11 +107,12 @@ public class start {
 					double rssiMax = rssiMeansTmp[1];
 					double rssiVarSum = DataProcess.getVar(rd.getTagArray(), beginTmp, 1);
 
-
 					if (cont.getState().isEmpty() && !cont.isPresent()) {
 						cont.setPresent(true);
 						ui.addState(cont);
 						ui.setBedNumAuto(cont, Reader.patient_bed.get(new_patient));
+						HashMap<String, Short> labelAntenna = Reader.getLabelAntenna();
+						labelAntenna.put(new_patient, (short) (Integer.parseInt(cont.getBedNum()) / 100));
 						numContainerList++;
 						// }
 					}
@@ -161,34 +162,12 @@ public class start {
 						ui.removeState(cont);
 					}
 
-					StringBuilder sql = new StringBuilder();
-					sql.append("insert into waterlevel values (");
-					sql.append("'jack'");
-					sql.append(",");
-					// sql.append("'"+cont.getBedNum()+"'");
-					sql.append("'" + 301 + "'");
-					sql.append(",");
-					sql.append("" + cont.getWaterLevel() * 12.5);
-					sql.append(",");
-					if (cont.isHasWarn()) {
-						sql.append("1");
-					} else {
-						sql.append("0");
-					}
-					sql.append(",");
-					sql.append("40");
-					sql.append(",");
-					sql.append("120");
-					sql.append(",");
-					sql.append("'NaCl'");
-					sql.append(",");
-					sql.append("04192008");
-					sql.append(");");
-					
-					sqlOperation.add(sql.toString());
-//					sqlOperation.select();
+
+
+					sqlOperation.add(cont);
+					// sqlOperation.select();
 				}
-				
+
 				rd.clearCache();
 
 			} else {

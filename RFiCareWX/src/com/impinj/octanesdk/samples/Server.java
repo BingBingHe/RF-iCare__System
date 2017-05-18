@@ -47,16 +47,20 @@ public class Server implements Runnable {
 			if (!str.equals("")) {
 				// System.out.println(str.trim());
 				String[] tmp = str.trim().split(";");
-				HashMap<String, Integer> map = Reader.getPatient_label();
+				HashMap<String, Integer> patient_label = Reader.getPatient_label();
+				HashMap<String, Long> patient_TimeStamp = Reader.getPatient_TimeStamp();
 				StringBuilder sb = new StringBuilder();
-				for(int i = 0 ; i  < tmp[0].length() ; i+=4){
-					sb.append(tmp[0].substring(i, i+4));
+				for (int i = 0; i < tmp[0].length(); i += 4) {
+					sb.append(tmp[0].substring(i, i + 4));
 					sb.append(' ');
 				}
-				
-				map.put(sb.toString().trim(), Reader.patient_curTagNum++);
-
-				Test.ht.put(Test.ht.size(), tmp[0]);
+				String result = sb.toString().trim();
+				if (!(patient_TimeStamp.containsKey(result)
+						&& System.currentTimeMillis() - patient_TimeStamp.get(result) < 10000)) {
+					patient_TimeStamp.put(result, System.currentTimeMillis());
+					patient_label.put(result, Reader.patient_curTagNum++);
+					System.out.println("****** " + result + "进入，手持阅读器扫描到的标签为：" + Reader.patient_curTagNum);
+				}
 			}
 			client.close();
 		}
