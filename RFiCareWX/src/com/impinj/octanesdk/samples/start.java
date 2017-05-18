@@ -24,6 +24,8 @@ public class start {
 		// 绘制初始化界面
 		UItest ui = new UItest();
 		ui.init();
+		Thread t = new Thread(new Server());
+		t.start();
 
 		// 初始化阅读器
 		rd.readerInit();
@@ -38,8 +40,8 @@ public class start {
 
 				// 读取的时延：3秒
 				Thread.sleep(sleepTime);
-
-				String new_patient = "E280 1160 6000 0204 A12B 02";
+				System.out.println(Reader.patient_curTagNum + "    =====    ");
+				String new_patient = "Unknown";
 				// System.out.println(Reader.patient_curTagNum + "#####");
 				if (Reader.patient_curTagNum >= 2 && Reader.patient_curTagNum % 2 == 0) {
 					// 是否属于病人标签
@@ -105,20 +107,8 @@ public class start {
 					double rssiMax = rssiMeansTmp[1];
 					double rssiVarSum = DataProcess.getVar(rd.getTagArray(), beginTmp, 1);
 
-					// 判断是否在场 && 离开
-					if (h == 0 && count > 1) {
-						rssiMean = -60;
-						rssiMax = -60;
-					}
-
-					if (h == 0 && count > 3) {
-						rssiMean = -50;
-						rssiMax = -53;
-					}
 
 					if (cont.getState().isEmpty() && !cont.isPresent()) {
-						// System.out.println(rssiMeans);
-						// if (rssiMax > thrCome) {
 						cont.setPresent(true);
 						ui.addState(cont);
 						ui.setBedNumAuto(cont, Reader.patient_bed.get(new_patient));
@@ -136,7 +126,6 @@ public class start {
 
 					if (rssiVarSum < 200) {
 						int waterLevel = (new WaterLevelCalculate()).CalSingle(rssiMean);
-						// System.out.println("， 水位： "+ waterLevel);
 						cont.setWaterLevel(waterLevel);
 						if (rssiMax > thrLeave) {
 							cont.getState().add(-2);
@@ -197,7 +186,7 @@ public class start {
 					sql.append(");");
 					
 					sqlOperation.add(sql.toString());
-					sqlOperation.select();
+//					sqlOperation.select();
 				}
 				
 				rd.clearCache();

@@ -34,7 +34,7 @@ public class Reader {
 	private static int patient_numTag;
 
 	private static ImpinjReader impinjReader = new ImpinjReader();
-	private String hostname = "192.168.1.100";
+	private String hostname = "192.168.1.106";
 
 	public static int curTagNum = 0;
 	public static int patient_curTagNum = 0;
@@ -43,9 +43,9 @@ public class Reader {
 
 	public void tagInit() {
 		// 初始化label
-		patient_bed.put("E280 1160 6000 0204 A12B 01", "101");
-		patient_bed.put("E280 1160 6000 0204 A12C 02", "102");
-		patient_bed.put("E280 1160 6000 0204 A12B 03", "103");
+		patient_bed.put("E280 1160 6000 0204 A12A 382A", "101");
+		patient_bed.put("E280 1160 6000 0204 A12A 384A", "102");
+		patient_bed.put("E280 1160 6000 0204 A12A 389A", "103");
 		patient_bed.put("E280 1160 6000 0204 A12C 04", "104");
 		patient_bed.put("E280 1160 6000 0204 A12B 05", "105");
 		patient_bed.put("E280 1160 6000 0204 A12C 06", "106");
@@ -67,6 +67,9 @@ public class Reader {
 		patient_bed.put("E280 1160 6000 0204 A12C 22", "306");
 		patient_bed.put("E280 1160 6000 0204 A12C 23", "307");
 		patient_bed.put("E280 1160 6000 0204 A12C 24", "308");
+		patient_bed.put("Unknown", "Unknown");
+
+		
 
 		// label.put("1B1B 1B1B 0000 0000 0000 0001", 1);
 		// label.put("1B1B 1B1B 0000 0000 0000 0002", 2);
@@ -130,7 +133,7 @@ public class Reader {
 				// TODO Auto-generated method stub
 				List<Tag> tags = report0.getTags();
 				for (Tag t : tags) {
-					System.out.println(t.getAntennaPortNumber() +"     "+t.getEpc().toString());
+//					System.out.println(t.getAntennaPortNumber() +"     "+t.getEpc().toString());
 					if (patient_bed.containsKey(t.getEpc().toString())) {
 						// 如果读到床号标签的话
 						if (patient_label.containsKey(t.getEpc().toString())) {
@@ -207,7 +210,7 @@ public class Reader {
 
 				settings.setReaderMode(ReaderMode.AutoSetDenseReader);
 
-				double txPowerinDbm = 12.0;
+				double txPowerinDbm = 10.0;
 				int rxSensitivityinDbm = -80;
 				AntennaConfigGroup antennas = settings.getAntennas();
 				antennas.disableAll();
