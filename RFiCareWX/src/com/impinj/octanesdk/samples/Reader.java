@@ -34,7 +34,7 @@ public class Reader {
 	private static int patient_numTag;
 
 	private static ImpinjReader impinjReader = new ImpinjReader();
-	private String hostname = "192.168.1.106";
+	private String hostname = "192.168.1.118";
 
 	public static int curTagNum = 0;
 	public static int patient_curTagNum = 0;
@@ -44,7 +44,7 @@ public class Reader {
 	public void tagInit() {
 		// ≥ı ºªØlabel
 		patient_bed.put("E280 1160 6000 0204 A12A 382A", "101");
-		patient_bed.put("E280 1160 6000 0204 A12A 384A", "102");
+		patient_bed.put("E280 1160 6000 0204 A12A 38A", "102");
 		patient_bed.put("E280 1160 6000 0204 A12A 389A", "103");
 		patient_bed.put("E280 1160 6000 0204 A12C 04", "104");
 		patient_bed.put("E280 1160 6000 0204 A12B 05", "105");
@@ -53,7 +53,7 @@ public class Reader {
 		patient_bed.put("E280 1160 6000 0204 A12C 08", "108");
 		patient_bed.put("E280 1160 6000 0204 A12B 09", "201");
 		patient_bed.put("E280 1160 6000 0204 A12C 10", "202");
-		patient_bed.put("E280 1160 6000 0204 A12B 11", "203");
+		patient_bed.put("E280 1160 6000 0204 A12A 384A", "203");
 		patient_bed.put("E280 1160 6000 0204 A12C 12", "204");
 		patient_bed.put("E280 1160 6000 0204 A12B 13", "205");
 		patient_bed.put("E280 1160 6000 0204 A12C 14", "206");
@@ -159,6 +159,8 @@ public class Reader {
 					// }
 					// } else {
 					if (label.containsKey(t.getEpc().toString())) {
+//						System.out.println(t.getEpc().toString() +"   " +t.getAntennaPortNumber() + "  " + labelAntenna.get(t.getEpc().toString()));
+//						System.out.println(t.getPeakRssiInDbm());
 						if (t.isPeakRssiInDbmPresent()
 								&& labelAntenna.get(t.getEpc().toString()) == t.getAntennaPortNumber()) {
 							tagArray.get(label.get(t.getEpc().toString())).add(t.getPeakRssiInDbm());

@@ -23,12 +23,22 @@ public class Container {
 
 	// 容器是否存在现场的标记
 	boolean present = false;
+	boolean canLeave = false;
 	// 容器的液面状态
 	int waterLevel = 2;
 	// 剩余时间
 	int timeRemainCal = 0;
 	int timeRemainCur = 0;
 	private String name;
+
+	
+	public boolean isCanLeave() {
+		return canLeave;
+	}
+
+	public void setCanLeave(boolean canLeave) {
+		this.canLeave = canLeave;
+	}
 
 	public Container(int begin) {
 		super();

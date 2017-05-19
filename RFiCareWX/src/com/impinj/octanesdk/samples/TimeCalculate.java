@@ -14,14 +14,13 @@ public class TimeCalculate {
 
 	// judge if the bottle can leave the environment
 	public boolean canLeave(ArrayList<Integer> state, Container cont) {
-
 //		System.out.println(state);
-		if (state.size() < 15) {
+		if (state.size() < 10) {
 			return false;
 		}
-		if (state.size() == 15) {
+		if (state.size() == 10) {
 			state.clear();
-			for (int i = 0; i < 15; i++) {
+			for (int i = 0; i < 10; i++) {
 				state.add(2);
 			}
 		}
@@ -32,7 +31,7 @@ public class TimeCalculate {
 			return true;
 		}
 		if (recentState1 == 2 && recentState2 == 2 && recentState3 == 2) {
-			for (int i = 11; i > 0; i--) {
+			for (int i = 6; i > 0; i--) {
 				if (state.get(state.size() - i - 2) == 0 && state.get(state.size() - i - 1) == 0
 						&& state.get(state.size() - i) == 0) {
 					return true;

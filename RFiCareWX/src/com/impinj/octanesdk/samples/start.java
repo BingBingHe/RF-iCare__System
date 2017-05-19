@@ -8,7 +8,7 @@ public class start {
 	static int sleepTime = 3000; // 滑动窗口的大小，ms为单位
 	static int varThreshold = 100; // 方差阈值
 
-	final static double thrLeave = -30.0; // 离开的阈值
+	final static double thrLeave = -20.0; // 离开的阈值
 	final static double thrCome = -50.0; // 进入的阈值
 	final static double thrComeforPatient = -40.0; // 病人进入的阈值
 
@@ -60,8 +60,9 @@ public class start {
 
 					if (Reader.isBed(last1) && !Reader.isBed(last2)) {
 						if (!Reader.getLabel().containsKey(last2)) {
-							Reader.getLabel().put(last2, Reader.curTagNum++);
 							new_patient = last1;
+							Reader.getLabel().put(last2, Reader.curTagNum++);
+							Reader.getLabelAntenna().put(last2, (short) (Integer.parseInt(Reader.getPatient_bed().get(new_patient)) / 100));
 							map.clear();
 							Reader.patient_curTagNum = 0;
 						} else {
@@ -71,8 +72,9 @@ public class start {
 
 					} else if (Reader.isBed(last2) && !Reader.isBed(last1)) {
 						if (!Reader.getLabel().containsKey(last1)) {
-							Reader.getLabel().put(last1, Reader.curTagNum++);
 							new_patient = last2;
+							Reader.getLabel().put(last1, Reader.curTagNum++);
+							Reader.getLabelAntenna().put(last1, (short) (Integer.parseInt(Reader.getPatient_bed().get(new_patient)) / 100));
 							map.clear();
 							Reader.patient_curTagNum = 0;
 						} else {
@@ -112,7 +114,8 @@ public class start {
 						ui.addState(cont);
 						ui.setBedNumAuto(cont, Reader.patient_bed.get(new_patient));
 						HashMap<String, Short> labelAntenna = Reader.getLabelAntenna();
-						labelAntenna.put(new_patient, (short) (Integer.parseInt(cont.getBedNum()) / 100));
+//						System.out.println((short) (Integer.parseInt(cont.getBedNum()) / 100));
+//						labelAntenna.put(, (short) (Integer.parseInt(cont.getBedNum()) / 100));
 						numContainerList++;
 						// }
 					}
@@ -128,7 +131,7 @@ public class start {
 					if (rssiVarSum < 200) {
 						int waterLevel = (new WaterLevelCalculate()).CalSingle(rssiMean);
 						cont.setWaterLevel(waterLevel);
-						if (rssiMax > thrLeave) {
+						if (rssiMax > thrLeave || cont.isCanLeave()) {
 							cont.getState().add(-2);
 							System.out.println("，  水位： -2" + " (" + cont.getState().size() + ")");
 						} else {
@@ -146,7 +149,7 @@ public class start {
 
 						ui.nurseState(cont);
 						cont.getTimestamp().add((int) (System.currentTimeMillis() % 100000000));
-						if (rssiMax > thrLeave) {
+						if (rssiMax > thrLeave || cont.isCanLeave()) {
 							cont.getState().add(-2);
 							System.out.println("，  水位： -2" + " (" + cont.getState().size() + ")");
 						} else {
@@ -154,7 +157,7 @@ public class start {
 							System.out.println("，  水位： -1" + " (" + cont.getState().size() + ")");
 						}
 					}
-
+					
 					boolean present = !new TimeCalculate().canLeave(cont.getState(), cont);
 					cont.setPresent(present);
 					if (!cont.isPresent()) {

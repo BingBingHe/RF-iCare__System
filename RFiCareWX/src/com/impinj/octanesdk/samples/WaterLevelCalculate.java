@@ -32,7 +32,7 @@ public class WaterLevelCalculate {
 
 		// -75 ,  -67
 		
-		double dataSingle[] = { -50.0, -63.0, -80.0 };
+		double dataSingle[] = { -57.0, -63.0, -80.0 };
 		
 		double[] dataDistances = new double[3];
 		int minIndex = -1;

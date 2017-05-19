@@ -327,7 +327,7 @@ public class UItest {
 
 		boolean ct = isNeedWarn(cont);
 
-		if (ct && cont.getState().size() > 8 || cont.isHasWarn() && label.getText().equals("请稍等...")) {
+		if (ct && cont.getState().size() > 5 || cont.isHasWarn() && label.getText().equals("请稍等...")) {
 			jLabel.setIcon(new ImageIcon(this.getClass().getResource("transfusion/empty.png")));
 			label.setText("警戒水位");
 			label.setBackground(Color.red);
@@ -377,7 +377,7 @@ public class UItest {
 
 	public boolean isNeedWarn(Container cont) {
 		boolean need = false;
-		if (cont.getWaterLevel() == 0 && cont.getState().size() > 15) {
+		if (cont.getWaterLevel() == 0 && cont.getState().size() > 5) {
 			ArrayList<Integer> arrayTmp = cont.getState();
 			if (arrayTmp.get(arrayTmp.size() - 2) == 0 && arrayTmp.get(arrayTmp.size() - 3) == 0) {
 				// if (arrayTmp.get(arrayTmp.size() - 2) == 0) {
@@ -391,7 +391,7 @@ public class UItest {
 	public void addWarn(Container cont) {
 		// 添加提醒
 		boolean ct = isNeedWarn(cont);
-		if (ct && cont.getState().size() > 15) {
+		if (ct && cont.getState().size() > 5) {
 
 //			SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss");
 //			Date curDate = new Date(System.currentTimeMillis());// 获取当前时间

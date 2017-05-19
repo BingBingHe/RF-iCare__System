@@ -47,6 +47,7 @@ public class Server implements Runnable {
 			if (!str.equals("")) {
 				// System.out.println(str.trim());
 				String[] tmp = str.trim().split(";");
+				// 加空格！！！
 				HashMap<String, Integer> patient_label = Reader.getPatient_label();
 				HashMap<String, Long> patient_TimeStamp = Reader.getPatient_TimeStamp();
 				StringBuilder sb = new StringBuilder();
@@ -55,6 +56,12 @@ public class Server implements Runnable {
 					sb.append(' ');
 				}
 				String result = sb.toString().trim();
+				if (Reader.getLabel().containsKey(result) && System.currentTimeMillis() - patient_TimeStamp.get(result) > 10000){
+					Container cont = Reader.containerList.get(Reader.getLabel().get(result));
+					cont.setCanLeave(true);
+					System.out.println(result + "可以离开！！！");
+					continue;
+				}
 				if (!(patient_TimeStamp.containsKey(result)
 						&& System.currentTimeMillis() - patient_TimeStamp.get(result) < 10000)) {
 					patient_TimeStamp.put(result, System.currentTimeMillis());
