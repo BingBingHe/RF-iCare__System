@@ -8,7 +8,7 @@ public class start {
 	static int sleepTime = 3000; // 滑动窗口的大小，ms为单位
 	static int varThreshold = 100; // 方差阈值
 
-	final static double thrLeave = -35.0; // 离开的阈值
+	final static double thrLeave = -30.0; // 离开的阈值
 	final static double thrCome = -50.0; // 进入的阈值
 	final static double thrComeforPatient = -40.0; // 病人进入的阈值
 
@@ -161,15 +161,10 @@ public class start {
 						ui.removeWarn(cont);
 						ui.removeState(cont);
 					}
-
-
-
 					sqlOperation.add(cont);
 					// sqlOperation.select();
 				}
-
 				rd.clearCache();
-
 			} else {
 				ui.initSign();
 			}

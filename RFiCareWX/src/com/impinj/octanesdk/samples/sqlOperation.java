@@ -17,7 +17,6 @@ public class sqlOperation {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		// String url = "114.212.84.243";
 		String url = "120.24.42.68";
 		String user = "javatest";
