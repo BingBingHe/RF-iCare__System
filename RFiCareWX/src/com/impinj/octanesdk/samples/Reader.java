@@ -131,8 +131,13 @@ public class Reader {
 				// TODO Auto-generated method stub
 				List<Tag> tags = report0.getTags();
 				for (Tag t : tags) {
-					// System.out.println(t.getAntennaPortNumber() +"
-					// "+t.getEpc().toString());
+					// if (t.getAntennaPortNumber() == (short) 1 &&
+					// t.getEpc().toString().equals("E200 4125 1704 0175 2110
+					// 3A5F")) {
+					// System.out.println(t.getAntennaPortNumber() + " " +
+					// t.getEpc().toString());
+					// System.out.println(t.getPeakRssiInDbm());
+					// }
 					// if (patient_bed.containsKey(t.getEpc().toString())) {
 					// // 如果读到床号标签的话
 					// if (patient_label.containsKey(t.getEpc().toString())) {
@@ -159,8 +164,10 @@ public class Reader {
 					// }
 					// } else {
 					if (label.containsKey(t.getEpc().toString())) {
-//						System.out.println(t.getEpc().toString() +"   " +t.getAntennaPortNumber() + "  " + labelAntenna.get(t.getEpc().toString()));
-//						System.out.println(t.getPeakRssiInDbm());
+						// System.out.println(t.getEpc().toString() +" "
+						// +t.getAntennaPortNumber() + " " +
+						// labelAntenna.get(t.getEpc().toString()));
+						// System.out.println(t.getPeakRssiInDbm());
 						if (t.isPeakRssiInDbmPresent()
 								&& labelAntenna.get(t.getEpc().toString()) == t.getAntennaPortNumber()) {
 							tagArray.get(label.get(t.getEpc().toString())).add(t.getPeakRssiInDbm());
@@ -197,7 +204,9 @@ public class Reader {
 				}
 			}
 		});
+
 		open();
+
 	}
 
 	public void closeReader() {
