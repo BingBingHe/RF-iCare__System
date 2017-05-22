@@ -34,7 +34,7 @@ public class Reader {
 	private static int patient_numTag;
 
 	private static ImpinjReader impinjReader = new ImpinjReader();
-	private String hostname = "192.168.1.100";
+	private String hostname = "192.168.8.104";
 
 	public static int curTagNum = 0;
 	public static int patient_curTagNum = 0;

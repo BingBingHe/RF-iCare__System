@@ -17,7 +17,7 @@ public class start {
 
 	public static void main(String[] args) throws InterruptedException, ClassNotFoundException, SQLException {
 
-		// sqlOperation.connection();
+		 sqlOperation.connection();
 
 		// 绘制初始化界面
 		UItest ui = new UItest();
@@ -116,14 +116,14 @@ public class start {
 						ui.removeWarn(cont);
 						ui.removeState(cont);
 					}
-					// sqlOperation.add(cont);
+					 sqlOperation.add(cont);
 				}
 				rd.clearCache();
 			} else {
 				ui.initSign();
 			}
 		}
-		// sqlOperation.close();
+		 sqlOperation.close();
 	}
 
 }
