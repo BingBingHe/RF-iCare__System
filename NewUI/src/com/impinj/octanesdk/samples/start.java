@@ -17,7 +17,7 @@ public class start {
 
 	public static void main(String[] args) throws InterruptedException, ClassNotFoundException, SQLException {
 
-		sqlOperation.connection();
+		// sqlOperation.connection();
 
 		// 绘制初始化界面
 		UItest ui = new UItest();
@@ -39,15 +39,15 @@ public class start {
 				// 读取的时延：3秒
 				Thread.sleep(sleepTime);
 
-				if (count == 1) {
-					Hand.getInfusion_bed().add("E280 1160 6000 0204 A12A 382A;105");
-				}
-
-				if (count == 1) {
-					Hand.getInfusion_bed().add("E280 1160 6000 0204 A12A 32;103");
-				}
-
-
+				// if (count == 1) {
+				// Hand.getInfusion_bed().add("E280 1160 6000 0204 A12A
+				// 382A;105");
+				// }
+				//
+				// if (count == 1) {
+				// Hand.getInfusion_bed().add("E280 1160 6000 0204 A12A
+				// 32;103");
+				// }
 
 				// 检测手持阅读器变化，并添加！
 				Hand.solve();
@@ -74,14 +74,14 @@ public class start {
 					// System.out.println();
 					// continue;
 					// }
-					
-					rssiMean = -45;
-					if (count > 15) {
-						rssiMean = -80;
-					}
+
+					// rssiMean = -45;
+					// if (count > 15) {
+					// rssiMean = -80;
+					// }
 
 					if (rssiVarSum < 200) {
-						int waterLevel = (new WaterLevelCalculate()).CalSingle(rssiMean);
+						int waterLevel = (new WaterLevelCalculate()).CalSingle(rssiMean, cont);
 						cont.setWaterLevel(waterLevel);
 						if (rssiMax > thrLeave || cont.isCanLeave()) {
 							cont.getState().add(-2);
@@ -116,14 +116,14 @@ public class start {
 						ui.removeWarn(cont);
 						ui.removeState(cont);
 					}
-					sqlOperation.add(cont);
+					// sqlOperation.add(cont);
 				}
 				rd.clearCache();
 			} else {
 				ui.initSign();
 			}
 		}
-		sqlOperation.close();
+		// sqlOperation.close();
 	}
 
 }

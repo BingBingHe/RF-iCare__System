@@ -28,12 +28,17 @@ public class WaterLevelCalculate {
 		return waterLevel;
 	}
 
-	public int CalSingle(double TagRssi) {
+	public int CalSingle(double TagRssi, Container cont) {
 
-		// -75 ,  -67
-		
-		double dataSingle[] = { -57.0, -63.0, -80.0 };
-		
+		double[][] data = { { -57.0, -63.0, -75.0 }, { -57.0, -63.0, -75.0 }, { -57.0, -63.0, -75.0 },
+				{ -57.0, -63.0, -75.0 } };
+
+		// -75 , -67
+		int bedNum = Integer.parseInt(cont.getBedNum());
+		int v = (bedNum - 1) % 4;
+
+		double dataSingle[] = data[v];
+
 		double[] dataDistances = new double[3];
 		int minIndex = -1;
 		double minDistance = 10000;

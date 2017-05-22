@@ -34,7 +34,7 @@ public class Reader {
 	private static int patient_numTag;
 
 	private static ImpinjReader impinjReader = new ImpinjReader();
-	private String hostname = "192.168.1.118";
+	private String hostname = "192.168.1.100";
 
 	public static int curTagNum = 0;
 	public static int patient_curTagNum = 0;
@@ -118,57 +118,54 @@ public class Reader {
 
 	public boolean open() {
 
-		// try {
-		// if (!ReaderOpen) {
-		//
-		// impinjReader.connect(hostname);
-		//
-		// final Settings settings = impinjReader.queryDefaultSettings();
-		// ReportConfig report = settings.getReport();
-		// report.setIncludeAntennaPortNumber(true);
-		// report.setIncludePeakRssi(true);
-		// report.setIncludePhaseAngle(true);
-		// report.setMode(ReportMode.Individual);
-		//
-		// settings.setReaderMode(ReaderMode.AutoSetDenseReader);
-		//
-		// double txPowerinDbm = 32.0;
-		// int rxSensitivityinDbm = -80;
-		// AntennaConfigGroup antennas = settings.getAntennas();
-		// antennas.disableAll();
-		// antennas.enableById(new short[] { 1 });
-		// antennas.getAntenna((short) 1).setIsMaxRxSensitivity(false);
-		// antennas.getAntenna((short) 1).setIsMaxTxPower(false);
-		// antennas.getAntenna((short) 1).setTxPowerinDbm(txPowerinDbm);
-		// antennas.getAntenna((short)
-		// 1).setRxSensitivityinDbm(rxSensitivityinDbm);
-		//
-		// antennas.enableById(new short[] { 2 });
-		// antennas.getAntenna((short) 2).setIsMaxRxSensitivity(false);
-		// antennas.getAntenna((short) 2).setIsMaxTxPower(false);
-		// antennas.getAntenna((short) 2).setTxPowerinDbm(txPowerinDbm);
-		// antennas.getAntenna((short)
-		// 2).setRxSensitivityinDbm(rxSensitivityinDbm);
-		//
-		// antennas.enableById(new short[] { 3 });
-		// antennas.getAntenna((short) 3).setIsMaxRxSensitivity(false);
-		// antennas.getAntenna((short) 3).setIsMaxTxPower(false);
-		// antennas.getAntenna((short) 3).setTxPowerinDbm(txPowerinDbm);
-		// antennas.getAntenna((short)
-		// 3).setRxSensitivityinDbm(rxSensitivityinDbm);
-		//
-		// impinjReader.applySettings(settings);
-		// impinjReader.start();
-		// ReaderOpen = true;
-		// }
-		//
-		// } catch (OctaneSdkException e1) {
-		// e1.printStackTrace();
-		// }
-		// return ReaderOpen;
+		try {
+			if (!ReaderOpen) {
 
-		ReaderOpen = true;
-		return true;
+				impinjReader.connect(hostname);
+
+				final Settings settings = impinjReader.queryDefaultSettings();
+				ReportConfig report = settings.getReport();
+				report.setIncludeAntennaPortNumber(true);
+				report.setIncludePeakRssi(true);
+				report.setIncludePhaseAngle(true);
+				report.setMode(ReportMode.Individual);
+
+				settings.setReaderMode(ReaderMode.AutoSetDenseReader);
+
+				double txPowerinDbm = 32.0;
+				int rxSensitivityinDbm = -80;
+				AntennaConfigGroup antennas = settings.getAntennas();
+				antennas.disableAll();
+				antennas.enableById(new short[] { 1 });
+				antennas.getAntenna((short) 1).setIsMaxRxSensitivity(false);
+				antennas.getAntenna((short) 1).setIsMaxTxPower(false);
+				antennas.getAntenna((short) 1).setTxPowerinDbm(txPowerinDbm);
+				antennas.getAntenna((short) 1).setRxSensitivityinDbm(rxSensitivityinDbm);
+
+				antennas.enableById(new short[] { 2 });
+				antennas.getAntenna((short) 2).setIsMaxRxSensitivity(false);
+				antennas.getAntenna((short) 2).setIsMaxTxPower(false);
+				antennas.getAntenna((short) 2).setTxPowerinDbm(txPowerinDbm);
+				antennas.getAntenna((short) 2).setRxSensitivityinDbm(rxSensitivityinDbm);
+
+				antennas.enableById(new short[] { 3 });
+				antennas.getAntenna((short) 3).setIsMaxRxSensitivity(false);
+				antennas.getAntenna((short) 3).setIsMaxTxPower(false);
+				antennas.getAntenna((short) 3).setTxPowerinDbm(txPowerinDbm);
+				antennas.getAntenna((short) 3).setRxSensitivityinDbm(rxSensitivityinDbm);
+
+				impinjReader.applySettings(settings);
+				impinjReader.start();
+				ReaderOpen = true;
+			}
+
+		} catch (OctaneSdkException e1) {
+			e1.printStackTrace();
+		}
+		return ReaderOpen;
+
+		// ReaderOpen = true;
+		// return true;
 	}
 
 	public boolean close() {

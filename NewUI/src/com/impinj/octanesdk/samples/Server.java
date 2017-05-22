@@ -44,32 +44,41 @@ public class Server implements Runnable {
 			client = server.accept();
 			System.out.println("connect successfully");
 			String str = getMsg();
-			if (!str.equals("")) {
-				// System.out.println(str.trim());
-				String[] tmp = str.trim().split(";");
-				// 加空格！！！
-				HashMap<String, Integer> patient_label = Reader.getPatient_label();
-				HashMap<String, Long> patient_TimeStamp = Reader.getPatient_TimeStamp();
-				StringBuilder sb = new StringBuilder();
-				for (int i = 0; i < tmp[0].length(); i += 4) {
-					sb.append(tmp[0].substring(i, i + 4));
-					sb.append(' ');
-				}
-				String result = sb.toString().trim();
-				if (Reader.getLabel().containsKey(result)
-						&& System.currentTimeMillis() - patient_TimeStamp.get(result) > 10000) {
-					Container cont = Reader.containerList.get(Reader.getLabel().get(result));
-					cont.setCanLeave(true);
-					System.out.println(result + "可以离开！！！");
-					continue;
-				}
-				if (!(patient_TimeStamp.containsKey(result)
-						&& System.currentTimeMillis() - patient_TimeStamp.get(result) < 10000)) {
-					patient_TimeStamp.put(result, System.currentTimeMillis());
-					patient_label.put(result, Reader.patient_curTagNum++);
-					System.out.println("****** " + result + "进入，手持阅读器扫描到的标签为：" + Reader.patient_curTagNum);
-				}
-			}
+
+			Hand.getInfusion_bed().add(str);
+			System.out.println(str + " " + " 进入！！！");
+			// if (!str.equals("")) {
+			// // System.out.println(str.trim());
+			// String[] tmp = str.trim().split(";");
+			// // 加空格！！！
+			// HashMap<String, Integer> patient_label =
+			// Reader.getPatient_label();
+			// HashMap<String, Long> patient_TimeStamp =
+			// Reader.getPatient_TimeStamp();
+			// StringBuilder sb = new StringBuilder();
+			// for (int i = 0; i < tmp[0].length(); i += 4) {
+			// sb.append(tmp[0].substring(i, i + 4));
+			// sb.append(' ');
+			// }
+			// String result = sb.toString().trim();
+			// if (Reader.getLabel().containsKey(result)
+			// && System.currentTimeMillis() - patient_TimeStamp.get(result) >
+			// 10000) {
+			// Container cont =
+			// Reader.containerList.get(Reader.getLabel().get(result));
+			// cont.setCanLeave(true);
+			// System.out.println(result + "可以离开！！！");
+			// continue;
+			// }
+			// if (!(patient_TimeStamp.containsKey(result)
+			// && System.currentTimeMillis() - patient_TimeStamp.get(result) <
+			// 10000)) {
+			// patient_TimeStamp.put(result, System.currentTimeMillis());
+			// patient_label.put(result, Reader.patient_curTagNum++);
+			// System.out.println("****** " + result + "进入，手持阅读器扫描到的标签为：" +
+			// Reader.patient_curTagNum);
+			// }
+			// }
 			client.close();
 		}
 	}
