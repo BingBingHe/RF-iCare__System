@@ -70,15 +70,6 @@ public class start {
 					System.out.print("吊瓶号： " + beginTmp + "， 均值：" + rssiMean + "， 最大值： " + rssiMax + "， 状态： "
 							+ cont.isPresent() + "， 方差：" + rssiVarSum);
 
-					// if (!cont.isPresent()) {
-					// System.out.println();
-					// continue;
-					// }
-
-					// rssiMean = -45;
-					// if (count > 15) {
-					// rssiMean = -80;
-					// }
 
 					if (rssiVarSum < 200) {
 						int waterLevel = (new WaterLevelCalculate()).CalSingle(rssiMean, cont);
@@ -117,6 +108,7 @@ public class start {
 						ui.removeState(cont);
 					}
 					 sqlOperation.add(cont);
+					 
 				}
 				rd.clearCache();
 			} else {

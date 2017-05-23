@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class sqlOperation {
 	public static Connection conn;
@@ -35,54 +37,48 @@ public class sqlOperation {
 
 		StringBuilder sql = new StringBuilder();
 		int count = selectBednumber(cont);
-
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
+		String time = "" + df.format(new Date());
 		if (count == 0) {
-			sql.append("insert into waterlevel values (");
-			sql.append("'jack'");
+
+			sql.append("insert into waterlevel values ("); // bednumber
+			sql.append("'" + cont.getBedNum() + "'");
 			sql.append(",");
-			// sql.append("'"+cont.getBedNum()+"'");
-			sql.append("'" + 301 + "'");
+			sql.append("'张三'"); // name
 			sql.append(",");
-			sql.append("" + cont.getWaterLevel() * 12.5);
+			sql.append("" + cont.getWaterLevel() * 12.5); // remaining
 			sql.append(",");
-			if (cont.isHasWarn()) {
-				sql.append("1");
+			if (cont.isHasWarn()) { // needWarn
+				sql.append("'yes'");
 			} else {
-				sql.append("0");
+				sql.append("'no'");
 			}
 			sql.append(",");
-			sql.append("40");
+			sql.append("'0.9%NaCl'"); // info
 			sql.append(",");
-			sql.append("120");
-			sql.append(",");
-			sql.append("'NaCl'");
-			sql.append(",");
-			sql.append("04192008");
+			sql.append("'" + time + "'"); // time
 			sql.append(");");
 
 		} else {
-			sql.append("insert into waterlevel values (");
-			sql.append("'jack'");
+
+			sql.append("update waterlevel set ");
+			sql.append("name = '张三'"); // name
 			sql.append(",");
-			// sql.append("'"+cont.getBedNum()+"'");
-			sql.append("'" + 301 + "'");
+			sql.append("remaining=" + cont.getWaterLevel() * 12.5); // remaining
 			sql.append(",");
-			sql.append("" + cont.getWaterLevel() * 12.5);
-			sql.append(",");
-			if (cont.isHasWarn()) {
-				sql.append("1");
+			sql.append("needwarn=");
+			if (cont.isHasWarn()) { // needwarn
+				sql.append("'yes'");
 			} else {
-				sql.append("0");
+				sql.append("'no'");
 			}
 			sql.append(",");
-			sql.append("40");
+			sql.append("info=");
+			sql.append("'0.9% NaCl溶液'"); // info
 			sql.append(",");
-			sql.append("120");
-			sql.append(",");
-			sql.append("'NaCl'");
-			sql.append(",");
-			sql.append("04192008");
-			sql.append(");");
+			sql.append("time=");
+			sql.append("'" + time + "'"); // time
+			sql.append(" where bednumber = '" + cont.getBedNum() + "';");
 		}
 
 		try {
@@ -99,8 +95,13 @@ public class sqlOperation {
 		try {
 			ret = stmt.executeQuery("select * from waterlevel");
 			while (ret.next()) {
+				System.out.print("【 ");
+				System.out.print(ret.getString("bednumber") + " ");
 				System.out.print(ret.getString("name") + " ");
-				System.out.println(ret.getString("info"));
+				System.out.print(ret.getString("remaining") + " ");
+				System.out.print(ret.getString("needwarn") + " ");
+				System.out.print(ret.getString("info") + " ");
+				System.out.println(ret.getString("time") + "】");
 			}
 			ret.close();
 		} catch (SQLException e) {
@@ -117,6 +118,13 @@ public class sqlOperation {
 
 			while (ret.next()) {
 				count++;
+				System.out.print("【 ");
+				System.out.print(ret.getString("bednumber") + " ");
+				System.out.print(ret.getString("name") + " ");
+				System.out.print(ret.getString("remaining") + " ");
+				System.out.print(ret.getString("needwarn") + " ");
+				System.out.print(ret.getString("info") + " ");
+				System.out.println(ret.getString("time") + "】");
 			}
 			ret.close();
 		} catch (SQLException e) {
